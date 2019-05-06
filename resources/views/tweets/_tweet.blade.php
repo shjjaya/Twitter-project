@@ -18,9 +18,12 @@
             <h5 class="card-subtitle text-muted">{{ $tweet->created_at }}</h5>
         </div>
             <p class="card-text">{{ $tweet->body }}</p>
+            @if(Auth::id() == $tweet->user_id)
+            <a href="/tweets/{{ $tweet->id }}/tweets/{{ $tweet->id }}/edit">Edit</a>
+            @endif
         <div class="card-text">
-            <a href="/likes/{{ $tweet->id }}/tweet">{{ $tweet->likes->count() > 0 ? 'unlike' : 'like' }} ({{ $tweet->likes->count() }} ) - </a>
-            <a href="/tweet/{{ $tweet->id }}#comments">Comments({{ $tweet->comments->count() }} ) - </a>
+             <like-button></like-button>
+            <a href="/tweets/{{ $tweet->id }}#comments">Comments({{ $tweet->comments->count() }} ) - </a>
                 @if($tweet->belongs_to_user)
                     <form action="/tweets/{{ $tweet->id }}" method="POST">
                         @csrf

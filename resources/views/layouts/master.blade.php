@@ -19,15 +19,10 @@
     <link href="/css/blog.css" rel="stylesheet">
   </head>
   <body>
-      @include('layouts.nav')
 
-
-
-
-          @yield('content')
-
-
-
-    @include('layouts.footer')
+        @include('layouts.nav')
+        @yield('content')
+        @include('layouts.footer')
+ 
 </body>
 </html>

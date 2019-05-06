@@ -21,6 +21,10 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.7"
+        "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "gsap": "^2.1.2",
+        "popmotion": "^8.6.8"
     }
 }

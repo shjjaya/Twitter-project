@@ -110,4 +110,15 @@ class ProfileController extends Controller
 
         return redirect('/home');
     }
+    public function followers($id) {
+    $user = \App\User::with('followers')->find($id)
+    return view('profiles.followers', compact('user'));
+    }
+    public function following($id) {
+    $user = \App\User::with('followers')->find($id)
+    return view('profiles.following', compact('user'));
+    }
+    public function currentUser() {
+        
+    }
 }

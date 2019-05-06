@@ -15,6 +15,14 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     public function index()
+     {
+         $commnet - new \App\Comment;
+         $comment->body = $request->get('comment_body');
+         $comment->user_id = Auth::id();
+         $comment->tweet_id = $id;
+         $comment->save();
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -34,11 +42,12 @@ class CommentController extends Controller
      */
     public function store(Request $request, $id)
     {
-        // dd(request()->all());
+        //dd(request()->all());
         $comment = new \App\Comment;
+        $comment->body = $request->get('comment_body');
         $comment->user_id = Auth::user()->id;
         $comment->tweet_id = $id;
-        $comment->body = $request->input('body');
+        // $comment->body = $request->input('body');
         $comment->save();
         return redirect('/tweets/' . $id);
     }
@@ -60,10 +69,11 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+     public function edit($tweet_id, $comment_id)
+     {
+         $comment = \App\Comment::find($comment_id);
+         return view('tweets.comments.edit' , compact('comment'));
+     }
 
     /**
      * Update the specified resource in storage.
@@ -72,12 +82,13 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request)
-    {
-        $search = $request->get('q');
-        return Product::where('name','email','%'.$search. '%')->get();
-
-    }
+     public function update(Request $request, $tweet_id, $comment_id)
+     {
+         $comment = Comment::find($comment_id);
+         $comment->user_id = Auth::if();
+         $comment->body = $request->body;
+         $comment->save();
+     }
 
     /**
      * Remove the specified resource from storage.
