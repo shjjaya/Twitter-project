@@ -6,6 +6,7 @@ use Overtrue\LaravelFollow\Traits\CanLike;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -37,6 +38,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['followed_by_user'];
+
     public function profile() {
         return $this->hasOne('\App\Profile');
     }
@@ -52,10 +56,17 @@ class User extends Authenticatable
     public function posts() {
         return $this->hasMany('App\Post');
     }
-    public function following() {
-        return $this->belongsToMany('App\User', 'followers','follower_id', 'leader_id');
+
+    public function getFollowedByUserAttribute() {
+        return $this->Followers()->where('follower_id', Auth::id())->count();
     }
+
+
     public function followers() {
         return $this->belongsToMany('App\User', 'followers', 'leader_id', 'follower_id');
     }
+    public function following() {
+        return $this->belongsToMany('App\User', 'followers','follower_id', 'leader_id');
+    }
+
 }

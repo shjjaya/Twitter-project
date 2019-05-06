@@ -16,3 +16,19 @@
                <button type="submit" class="btn btn-primary">Tweet!</button>
         </div>
     </form>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <div id="app">
+            <div class="container">
+            <searchbar></searchbar>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -49228,6 +49228,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('like-button', __webpack_require__(/*! ./components/LikeButton.vue */ "./resources/js/components/LikeButton.vue")["default"]);
+Vue.component('gipy-api', __webpack_require__(/*! ./components/GipyApi.js */ "./resources/js/components/GipyApi.js")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49275,13 +49276,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * a simple convenience so we don't have to attach every token manually.
  */
 
-var token = document.head.querySelector('meta[name="csrf-token"]');
+var token = document.head.querySelector('meta[name="csrf-token"]'); // if (token) {
+//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+// } else {
+//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+// }
 
-if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -49295,6 +49295,58 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/GipyApi.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/GipyApi.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+Vue.component('searchbar', {
+  data: function data() {
+    return {
+      criteria: null,
+      apiKey: 'PPXOMLUPnCm8gbJewKXimgf59v1Cbonn',
+      limit: 5,
+      selectedGif: '',
+      gifs: [],
+      dropdownOpen: false
+    };
+  },
+  template: "\n        <div class=\"search-bar\">\n        <h2 style=\"color:blue;\" class=\"text-left\">Search For Gifs</h2>\n            <div class=\"search\">\n                 <form v-on:submit.prevent=\"getGifs\">\n                    <input type=\"text\"\n                    class=\"text-center\"\n                    v-on:keyup.enter=\"getGifs\"\n                    v-model=\"criteria\"\n                    placeholder=\"Search GIFs\" style=\"color:blue;\"/>\n                    <button class=\"btn btn-primary\" v-on:click=\"getGifs\">Search</button>\n                </form>\n            </div>\n            <div class=\"dropdown\">\n                <div class=\"dropdown-menu\" :class=\"{ 'show' : dropdownOpen }\">\n                    <a href=\"#\" class=\"dropdown-item\"\n                        v-on:click=\"selectGif(gif.images)\"\n                        v-for=\"gif in gifs\">\n                        <img :src=\"gif.images.fixed_width.url\" />\n                    </a>\n                </div>\n            </div>\n            <div v-show=\"selectedGif\" class=\"card selectedGifPreview\">\n                <div class=\"card-body\">\n                    <img :src=\"selectedGif\" />\n                    <br />\n                     <a href=\"#\" class=\"btn btn-danger\" v-on:click=\"selectedGif=''\">X</a>\n                </div>\n            </div>\n        </div>\n    ",
+  methods: {
+    getGifs: function getGifs() {
+      var _this = this;
+
+      if (!this.criteria) {
+        return false;
+      }
+
+      console.log(this.critera);
+      this.gifs = [], this.dropdownOpen = false;
+      axios.get('https://api.giphy.com/v1/gifs/search?q=' + this.criteria + '&api_key=' + this.apiKey + '&limit=' + this.limit).then(function (response) {
+        _this.loadGifs(response.data.data);
+
+        console.log(response);
+      });
+    },
+    loadGifs: function loadGifs(data) {
+      this.gifs = data;
+      this.dropdownOpen = true;
+    },
+    selectGif: function selectGif(gif) {
+      console.log(gif);
+      this.selectedGif = gif.fixed_height.url;
+      this.dropdownOpen = false;
+    },
+    doFocus: function doFocus() {
+      if (this.criteria) this.dropdownOpen = true;
+    }
+  }
+});
 
 /***/ }),
 

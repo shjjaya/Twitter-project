@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/tweets';
+    protected $redirectTo = '/who-to-follow';
 
     /**
      * Create a new controller instance.

@@ -2,8 +2,7 @@
 
 @section('content')
 <h1>Following</h1>
-    @foreach($user->following as $user)
-    @include('followw._followee')
+    @foreach($users->following as $user)
+    @include('profiles._followee')
     @endforeach
-    {{ $users->links() }}
 @endsection

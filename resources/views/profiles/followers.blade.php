@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Followers</h1>
-        @foreach($user->followers as $user)
-            @include('followw._followee')
+    <h1 class="title">Followers {{ $users->followers->count() }}</h1>
+        @foreach($users->followers as $user)
+            @include('profiles._followee')
         @endforeach
-    {{ $users->links() }}
 @endsection

@@ -10,7 +10,7 @@
 
     {{ $user->first_name }} {{ $user->last_name}}
     @if(Auth::id() != $user->id)
-        @include('followw._follow-user')
+        @include('profiles._followee')
     @endif
     <h1 class="title">{{ $user->name }}</h1>
         <p>{{ $user->profile->bio }}</p>
@@ -19,11 +19,15 @@
         <li class="list-group-item">Birthday: {{ $user->profile->birthday }}</li>
     </ul>
 
-    <div class="card-text">
-        <a href="/profiles/{{ $user->id }}/followers">Followers ({{ $user->followers()->count() }})</a> -
+    <div class="card-body d-flex row justify-content-between text-center">
+        <a href="/profiles/{{ $user->id }}/followers">Followers ({{ $user->followers()->count() }})</a>
+
         <a href="/profiles/{{ $user->id }}/following">Following ({{ $user->following()->count() }})</a>
+
+
         @if($user = Auth::user())
             <a class="btn btn-primary" href="/profiles/{{$user->id}}/edit">Edit Profile</a>
         @endif
     </div>
+
 @endsection

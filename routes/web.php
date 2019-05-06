@@ -27,8 +27,7 @@ Route::middleware(['auth'])->group(function() {
     // Route::get('/who-to-follow', 'ProfileController@suggest');
 
     Route::resource('/tweets', 'TweetController');
-    Route::get('/profiles/{profile}/followers', 'ProfileController@follower');
-    Route::get('/profiles/{profile}/following', 'ProfileController@following');
+
     Route::get('/', function () {
         return redirect('/tweets');
 
@@ -41,6 +40,15 @@ Route::middleware(['auth'])->group(function() {
     // Route::post('tweets/{tweet}/comments', 'CommentController@store');
     // Route::delete('tweets/{tweet}/comments', 'CommentController@destroy');
     Route::get('/likes/{id}/tweet', 'LikeController@like');
+
+    Route::get('/profiles/{profile}/followers', 'ProfileController@followers');
+    Route::get('/profiles/{profile}/following', 'ProfileController@following');
+
+    Route::get('/profiles/{profile}/follow', 'ProfileController@follow');
+    Route::get('/profiles/{profile}/unfollow', 'ProfileController@unfollow');
+
+    // who to follow one-off -- if adding more stand alone pages,consider a PageController
+    Route::get('/who-to-follow', 'ProfileController@suggest');
 
 });
 
