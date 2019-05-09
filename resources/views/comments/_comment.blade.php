@@ -5,6 +5,7 @@
         <p><a href="/tweets/{{ $tweet->id }}/comments/{{ $comment }}"></a>
     </p>
 
+
     @if($comment->belongs_to_user)
         <form action="/comment/{{ $comment->id }}" method="POST">
             @csrf
