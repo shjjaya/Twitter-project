@@ -80,7 +80,7 @@
 
         <main class="py-4 container">
             <div id="app">
-                HELLO WORLD
+                
                 @yield('content')
             </div>
         </main>
